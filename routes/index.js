@@ -1,17 +1,17 @@
 const express = require('express')
 const router = express.Router()
-
+const{ensureAuth,ensureGuest} = require('../controller/auth')
 // @desc Login page
 // @route GET /
-router.get('/', (req,res) =>
+router.get('/',ensureGuest, (req,res) =>
 {
-    res.render('login',{ layout: 'layouts/login' })
+    res.render('login', { layout: 'layouts/login' })
 })
 
 
 // @desc Dashboard
 // @route GET /dashboard
-router.get('/dashboard',(req,res)=>{
+router.get('/dashboard',ensureAuth,(req,res)=>{
     res.render('dashboard')
 })
 
