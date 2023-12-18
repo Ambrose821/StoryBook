@@ -5,8 +5,12 @@ var path = require('path');
 
 const expressLayouts = require('express-ejs-layouts')
 const session = require('express-session')
+const mongoose = require('mongoose')
+
+
 
 const passport = require('passport')
+const MongoStore = require('connect-mongo')
 
 //Load config
 dotenv.config({path: './config/config.env'})
@@ -24,12 +28,13 @@ const app = express()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//Sessions
+
+//Session
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
-    saveUninitialized: false
-   
+    saveUninitialized: false,
+    store: MongoStore.create({mongoUrl : process.env.MONGO_URI})
 
 }))
 
