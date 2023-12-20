@@ -2,7 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 var path = require('path');
-
+const methodOverride = require('method-override') //Allows us to use PUT and DELETE
 const expressLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const mongoose = require('mongoose')
@@ -24,11 +24,20 @@ connectDB()
 const PORT = process.env.PORT || 5000
 const app = express()
 
-//Body parser middleware to accept for data
-
+//Body parser middleware to accept for, data
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
+//middle ware for methodOverride so use of PUT and DELETE is possible
+//from method-Overide docs
+ app.use(methodOverride((req,res)=>{
+    if(req.body && typeof req.body === 'object' && '_method' in req.body){
+        //look in urlencoded POST  bodies and delete it
+        var method = req.body._method
+        delete req.body._method
+        return method
+    }
+ }))
 
 const {formatDate, truncate, stripTags,editIcon } = require('./helper/ejs')
 //set view engine to ejs
