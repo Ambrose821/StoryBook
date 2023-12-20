@@ -16,7 +16,7 @@
                     <tr>
                         <td><a href="/stories/<%=item._id%>"><%= item.title%></a></td>
                        <td>
-                            <%= item.createdAt%>
+                            <%= formatDate(item.createdAt, "MMMM Do YYYY, h:mm:ss a")%>
                        </td>
                        <td>
                         <span class="dash-status"><%=item.status%></span>

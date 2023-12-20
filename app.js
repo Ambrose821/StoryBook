@@ -29,10 +29,15 @@ const app = express()
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
+
+const {formatDate, truncate, stripTags } = require('./helper/ejs')
 //set view engine to ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Make formatDate function available globally to EJS templates
+app.locals.formatDate = formatDate;
+app.locals.truncate = truncate
 
 //Session
 app.use(session({

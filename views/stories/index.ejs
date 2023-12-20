@@ -1,0 +1,28 @@
+<h1>Public Stories</h1>
+<% if (stories.length > 0) { %>
+  <div class="row">
+    <% for (let i = 0; i < stories.length; i++) { %>
+      <div class="col s12 m4">
+        <div class="card">
+          <div class="card-image">
+            <!-- Todo; Edit Icon for user's stories -->
+          </div>
+          <div class="card-content center-align">
+            <h5><%= stories[i].title %></h5>
+            <p><%= stories[i].body %></p>
+            <br>
+            <div class="chip">
+              <img src="<%= stories[i].user.image %>" alt="">
+              <a href="/stories/user/<%= stories[i].user._id %>"><%= stories[i].user.displayName %></a>
+            </div>
+          </div>
+          <div class="card-action center-align">
+            <a href="/stories/<%= stories[i]._id %>" class="btn grey">Read More</a>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } else { %>
+  <p>No Public Stories Yet. Click the Button on the bottom right to add some!</p>
+<% } %>
