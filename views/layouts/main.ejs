@@ -13,12 +13,25 @@
     <%-include('../partials/_header')%>
     <div class ="container">
       <%- body%>
+    <%-include('../partials/_add_btn')%>
     </div>
    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script> document.addEventListener('DOMContentLoaded', function() {
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+    <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+      ClassicEditor.create(document.getElementById('body'));
+
+    });
+
+   document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.sidenav');
       var instances = M.Sidenav.init(elems);
-  });</script>
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('#status');
+      var instances = M.FormSelect.init(elems);
+  });
+</script>
   </body>
 </html>

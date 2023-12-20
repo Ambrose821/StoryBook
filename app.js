@@ -24,6 +24,11 @@ connectDB()
 const PORT = process.env.PORT || 5000
 const app = express()
 
+//Body parser middleware to accept for data
+
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+
 //set view engine to ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -56,6 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', require('./routes/index'))
 app.use('/auth', require('./routes/auth'))
+app.use('/stories',require('./routes/stories'))
 
 app.listen(PORT, console.log(`Server Running in ${process.env.NODE_ENV} mode on port ${PORT}`))
  

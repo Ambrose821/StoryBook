@@ -1,3 +1,37 @@
 <h6>DashBoard</h6>
 <h3>Welcome <%=name %></h3>
 <p>Here are your stories</p>
+<% if(stories.length > 0 || stories.length !=0) {%>
+    <table class="striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+                <% stories.forEach(function(item){%>
+                    <tr>
+                        <td><a href="/stories/<%=item._id%>"><%= item.title%></a></td>
+                       <td>
+                            <%= item.createdAt%>
+                       </td>
+                       <td>
+                        <span class="dash-status"><%=item.status%></span>
+                       </td>
+                       <td></td>
+                    </tr>
+                        
+                    
+                <% })%>
+           
+
+        </tbody>
+    </table>
+
+
+<% } else {%>
+<p>No Stories yet!</p>
+<%}%>
