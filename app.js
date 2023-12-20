@@ -30,15 +30,16 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 
-const {formatDate, truncate, stripTags } = require('./helper/ejs')
+const {formatDate, truncate, stripTags,editIcon } = require('./helper/ejs')
 //set view engine to ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Make formatDate function available globally to EJS templates
 app.locals.formatDate = formatDate;
-app.locals.truncate = truncate
-
+app.locals.truncate = truncate;
+app.locals.stripTags = stripTags;
+app.locals.editIcon = editIcon;
 //Session
 app.use(session({
     secret: 'keyboard cat',
@@ -52,6 +53,12 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+//Set global Variable for user instead of adding it to every route with {user: req.user}
+app.use((req,res,next)=>
+{
+    res.locals.user = req.user || null
+    next()
+})
 //use layouts
 
 app.use(expressLayouts)

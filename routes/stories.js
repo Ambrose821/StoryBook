@@ -12,11 +12,11 @@ router.get('/add',ensureAuth,(req,res)=>{
 
 //@desc Process post stories
 //@route post /stories
-router.post('/', ensureAuth,async(req,res)=>{
+router.post('/', ensureAuth, async(req,res)=>{
     try {
         req.body.user = req.user.id
         await Story.create(req.body)
-        res.redirect('/dashboard')
+        res.redirect('/dashboard',{user: req.user})
     } catch (error) {
         console.error(error)
         res.render('error/500')
@@ -28,7 +28,7 @@ router.post('/', ensureAuth,async(req,res)=>{
 router.get('/',ensureAuth, async(req,res)=>{
     try{
         const stories = await Story.find({status: 'public'}).populate('user').sort({createdAt:'desc'}).lean()
-        res.render('stories/index',{stories: stories})
+        res.render('stories/index',{stories: stories, user:req.user})
     }catch(err){
 
     }
