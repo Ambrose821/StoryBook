@@ -16,7 +16,7 @@ router.post('/', ensureAuth, async(req,res)=>{
     try {
         req.body.user = req.user.id
         await Story.create(req.body)
-        res.redirect('/dashboard',{user: req.user})
+        res.redirect('/dashboard')
     } catch (error) {
         console.error(error)
         res.render('error/500')
@@ -76,4 +76,31 @@ router.put('/:id',ensureAuth, async(req,res)=>{
     }
 })
 
+router.delete('/:id',ensureAuth, async(req,res)=>{
+    try{
+
+        let story = await Story.findById(req.params.id).lean();
+        if(!story){
+            return res.render('error/404')
+
+        }
+        if(story.user != req.user.id){
+            res.redirect('/stories')
+        }
+        else{
+        
+            const{title,status,body} = req.body;
+        const updateFields = {title,status,body};
+            //Could have also used await Story.remoce({._id req.params.id})
+        story = await Story.findOneAndDelete({ _id: req.params.id, user: req.user.id }, updateFields, { new: true })
+        res.redirect('/dashboard')
+     }
+     
+        }catch(err){
+        console.log(err)
+        return res.render('error/500')
+    }
+
+}
+)
 module.exports = router
