@@ -30,7 +30,8 @@ router.get('/',ensureAuth, async(req,res)=>{
         const stories = await Story.find({status: 'public'}).populate('user').sort({createdAt:'desc'}).lean()
         res.render('stories/index',{stories: stories, user:req.user})
     }catch(err){
-
+        console.log(err)
+        res.render('error/500')
     }
 })
 //@desc edit existing story page
@@ -103,4 +104,43 @@ router.delete('/:id',ensureAuth, async(req,res)=>{
 
 }
 )
+
+router.get('/:id',ensureAuth,async(req,res)=>{
+    try{
+    const story = await Story.findOne({_id: req.params.id}).populate('user').lean()
+
+    
+    if(!story){
+        return res.render('error/500')
+    }
+
+    else{
+        res.render('stories/single',{story: story,user:req.user})
+    }
+} catch(err){
+    console.log(err)
+    res.render('error/500')
+}
+
+})
+
+// @desc    User stories
+// @route   GET /stories/user/:userId
+router.get('/user/:userId', ensureAuth, async (req, res) => {
+    try {
+      const stories = await Story.find({
+        user: req.params.userId,
+        status: 'public',
+      })
+        .populate('user')
+        .lean()
+  
+      res.render('stories/index', {
+        stories,
+      })
+    } catch (err) {
+      console.error(err)
+      res.render('error/500')
+    }
+  })
 module.exports = router
