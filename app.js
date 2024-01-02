@@ -7,8 +7,6 @@ const expressLayouts = require('express-ejs-layouts')
 const session = require('express-session')
 const mongoose = require('mongoose')
 
-
-
 const passport = require('passport')
 const MongoStore = require('connect-mongo')
 
