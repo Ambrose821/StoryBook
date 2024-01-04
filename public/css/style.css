@@ -1,5 +1,11 @@
 
 
+body {
+    background-image: linear-gradient(rgb(255, 255, 255), rgba(84, 43, 0, 0.8)), url(../images/pexels-stanislav-kondratiev-2908984.jpg);
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+  }
 .login-container{
     width: 400px;
     margin-top: 50px;
